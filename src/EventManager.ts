@@ -1,7 +1,8 @@
-import { autoInjectable } from "tsyringe";
+import { Injectable } from "./Decorators";
+import { Di } from "./Di";
 import Event from "./Event";
 
-@autoInjectable()
+@Injectable()
 class EventManager {
   private _queue: Array<Event>;
 
@@ -9,24 +10,26 @@ class EventManager {
     this._queue = new Array();
   }
 
-  public start() {
+  public start(interval: number) {
     setInterval(() => {
       this.dispatchFromQueue();
-    }, 500);
+    }, interval);
   }
 
-  public enqueue(event: Event) {
-    let listeners = Reflect.getMetadata("listeners", event.constructor);
+  public enqueue(event: Function) {
+    const eventInstance = Di.get<Event>(event);
+    let listeners = Reflect.getMetadata("listeners", event);
     listeners = listeners.map((l: Function) => Reflect.construct(l, []));
-    event.addListeners(listeners);
-    this._queue.push(event);
+    eventInstance.addListeners(listeners);
+    this._queue.push(eventInstance);
   }
 
-  public async dispatch(event: Event) {
-    let listeners = Reflect.getMetadata("listeners", event.constructor);
+  public async dispatch(event: Function) {
+    const eventInstance = Di.get<Event>(event);
+    let listeners = Reflect.getMetadata("listeners", event);
     listeners = listeners.map((l: Function) => Reflect.construct(l, []));
-    event.addListeners(listeners);
-    event.dispatch();
+    eventInstance.addListeners(listeners);
+    eventInstance.dispatch();
   }
 
   private async dispatchFromQueue() {

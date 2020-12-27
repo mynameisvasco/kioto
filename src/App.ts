@@ -1,13 +1,15 @@
 import "reflect-metadata";
 import { createServer, Server } from "http";
-import { autoInjectable } from "tsyringe";
-import { RouteMetadata } from "./Decorators";
+import { Injectable, RouteInfo } from "./Decorators";
 import Config from "./Config";
 import RequestHandler from "./RequestHandler";
 import Router from "./Router";
 import EventManager from "./EventManager";
+import { Container } from "inversify";
+import { Di, Types } from "./Di";
+import Event from "./Event";
 
-@autoInjectable()
+@Injectable()
 class App {
   private readonly _config: Config;
   private readonly _requestHandler: RequestHandler;
@@ -28,28 +30,42 @@ class App {
   }
 
   public start() {
+    this.startControllers();
+    this.startEventManager();
+    this.startServer();
+  }
+
+  private startControllers() {
+    const controller = Di.getAll<any>(Types.Controller);
+    for (var c of controller) {
+      const router = Reflect.getMetadata("router", c.constructor) as Router;
+      const routesInfo = Reflect.getMetadata("routes-info", c) as RouteInfo[];
+      for (var routeInfo of routesInfo) {
+        routeInfo.route.use(routeInfo.handler.bind(c));
+      }
+      router.useRoutes(routesInfo.map((r) => r.route));
+      this._requestHandler.useRouter(router);
+    }
+  }
+
+  private startEvents() {
+    const events = Di.getAll<Event>(Types.Controller);
+    for (var e of events) {
+      const listeners = Reflect.getMetadata("listeners", e.constructor);
+      e.addListeners(listeners);
+    }
+  }
+
+  private startServer() {
     const port = this._config.get("port");
     this._server.listen(port, () => {
       console.log(`🔥 Pluto running on port ${port}`);
     });
-    this._eventManager.start();
   }
 
-  public useRouters(routers: Router[]) {
-    routers.forEach((r) => this._requestHandler.useRouter(r));
-  }
-
-  public useControllers(controllers: Function[]) {
-    controllers.forEach((c) => {
-      const cInstance = Reflect.construct(c, []);
-      const router: Router = Reflect.getMetadata("router", c);
-      const routesMetadata = Reflect.getMetadata("routeMetadata", c.prototype);
-      routesMetadata.forEach((rMetadata: RouteMetadata) => {
-        rMetadata.route.use(rMetadata.handler.bind(cInstance));
-        router.useRoute(rMetadata.route);
-      });
-      this._requestHandler.useRouter(router);
-    });
+  private startEventManager() {
+    const eventsInterval = this._config.get<number>("events-interval");
+    this._eventManager.start(eventsInterval);
   }
 }
 

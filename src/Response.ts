@@ -1,3 +1,4 @@
+import { Serializable } from "child_process";
 import { ServerResponse } from "http";
 
 class Response {
@@ -8,10 +9,14 @@ class Response {
   }
 
   public send(content: any, headers: Map<string, string>, code: number = 200) {
-    this._outcoming.statusCode = code;
-    this._outcoming.setHeader("Content-Type", "application/json");
-    this._outcoming.write(JSON.stringify(content));
-    this._outcoming.end();
+    const { _outcoming } = this;
+    _outcoming.statusCode = code;
+    _outcoming.setHeader(
+      "Content-Type",
+      headers.get("Content-Type") ?? "application/json"
+    );
+    _outcoming.write(JSON.stringify(content));
+    _outcoming.end();
   }
 
   public sendJson(content: any, code: number = 200) {
@@ -29,6 +34,12 @@ class Response {
   public sendText(content: any, code: number = 200) {
     const headers = new Map();
     headers.set("Content-Type", "text/plain");
+    this.send(content, headers, code);
+  }
+
+  public sendImage(content: ArrayBuffer, format: string, code: number = 200) {
+    const headers = new Map();
+    headers.set("Content-Type", `image/${format}`);
     this.send(content, headers, code);
   }
 }

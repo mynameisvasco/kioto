@@ -2,6 +2,7 @@ import * as Url from "url";
 import Request from "./Request";
 import { RequestDelegate } from "./RequestHandler";
 import Response from "./Response";
+import { Utils } from "./Utils";
 
 export class Route {
   private _path: Url.Url;
@@ -9,7 +10,7 @@ export class Route {
   private _queue: Array<RequestDelegate>;
 
   public constructor(path: string, method: string) {
-    this._path = Url.parse(path);
+    this._path = Url.parse(Utils.sanitizeUrl("/" + path));
     this._method = method.toLowerCase();
     this._queue = new Array();
   }
@@ -18,16 +19,16 @@ export class Route {
     this._queue.push(v);
   }
 
-  public handle(req: Request, res: Response) {
+  public async handle(req: Request, res: Response) {
     let idx = 0;
     let f = this._queue[idx];
-    const next = () => {
+    const next = async () => {
       if (++idx < this._queue.length) {
         let f = this._queue[idx];
         f(req, res, next);
       }
     };
-    f(req, res, next);
+    f && (await f(req, res, next));
   }
 
   public get path() {

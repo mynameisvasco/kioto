@@ -3,6 +3,7 @@ import Route from "./Route";
 import { RequestDelegate } from "./RequestHandler";
 import Request from "./Request";
 import Response from "./Response";
+import { Utils } from "./Utils";
 
 class Router {
   private _basePath: Url.Url;
@@ -10,7 +11,7 @@ class Router {
   private _routes: Array<Route>;
 
   public constructor(basePath: string) {
-    this._basePath = Url.parse(basePath);
+    this._basePath = Url.parse("/" + basePath);
     this._queue = new Array();
     this._routes = new Array();
   }
@@ -19,35 +20,33 @@ class Router {
     this._queue.push(v);
   }
 
-  public useRoute(route: Route) {
-    this._routes.push(route);
-  }
-
   public useRoutes(routes: Route[]) {
     this._routes = this._routes.concat(routes);
   }
 
   public matchRoute(path: string, method: string) {
-    return this._routes.find((route) => {
-      const providedPath = Url.parse(path);
-      const finalPath = `/${this.basePath.pathname}/${route.path.pathname}`;
-      return (
-        finalPath === providedPath.pathname &&
-        route.method.toLowerCase() === method.toLowerCase()
-      );
-    });
+    for (var route of this._routes) {
+      const providedPath = Url.parse(Utils.sanitizeUrl(path));
+      const finalPathName = `${this.basePath.pathname}${route.path.pathname}`;
+      if (
+        finalPathName === providedPath.pathname &&
+        route.method === method.toLowerCase()
+      ) {
+        return route;
+      }
+    }
   }
 
-  public handle(req: Request, res: Response) {
+  public async handle(req: Request, res: Response) {
     let idx = 0;
     let f = this._queue[idx];
-    const next = () => {
+    const next = async () => {
       if (++idx < this._queue.length) {
         let f = this._queue[idx];
-        f(req, res, next);
+        await f(req, res, next);
       }
     };
-    f && f(req, res, next);
+    f && (await f(req, res, next));
   }
 
   public get basePath() {

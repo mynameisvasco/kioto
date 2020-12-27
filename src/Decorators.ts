@@ -1,11 +1,10 @@
-import { autoInjectable } from "tsyringe";
-
+import { inject, injectable } from "inversify";
 import Middleware from "./Middleware";
 import { RequestDelegate } from "./RequestHandler";
 import Route from "./Route";
 import Router from "./Router";
 
-export interface RouteMetadata {
+interface RouteInfo {
   route: Route;
   handler: RequestDelegate;
 }
@@ -18,7 +17,7 @@ function defineRouteMetadata(
   handler: RequestDelegate
 ) {
   const route = new Route(path, method);
-  const rMetadata: RouteMetadata = {
+  const rMetadata: RouteInfo = {
     handler,
     route,
   };
@@ -26,10 +25,10 @@ function defineRouteMetadata(
     const mInstance: Middleware = Reflect.construct(m, []);
     route.use(mInstance.handle.bind(mInstance) as RequestDelegate);
   });
-  let rMetadatas = Reflect.getMetadata("routeMetadata", target);
-  if (!rMetadatas) rMetadatas = new Array<RouteMetadata>();
+  let rMetadatas = Reflect.getMetadata("routes-info", target);
+  if (!rMetadatas) rMetadatas = new Array<RouteInfo>();
   rMetadatas.push(rMetadata);
-  Reflect.defineMetadata("routeMetadata", rMetadatas, target);
+  Reflect.defineMetadata("routes-info", rMetadatas, target);
 }
 
 function Get(path: string, middleware: Function[] = []) {
@@ -72,22 +71,48 @@ function Delete(path: string, middleware: Function[] = []) {
   };
 }
 
-function Controller(baseUrl: string, middleware: Function[] = []) {
+function Controller(baseUrl: string = "", middleware: Function[] = []) {
   return (constructor: Function) => {
     const router = new Router(baseUrl);
     middleware.forEach((m) =>
       router.use(Reflect.construct(m, []).handle.bind(m))
     );
     Reflect.defineMetadata("router", router, constructor);
-    return autoInjectable()(constructor as any);
+    return injectable()(constructor as any);
   };
 }
 
 function Listeners(listeners: Function[]) {
   return (constructor: Function) => {
     Reflect.defineMetadata("listeners", listeners, constructor);
-    return autoInjectable()(constructor as any);
+    return injectable()(constructor as any);
   };
 }
 
-export { Get, Post, Put, Delete, Controller, Listeners };
+function Injectable() {
+  return (constructor: Function) => {
+    return injectable()(constructor as any);
+  };
+}
+
+function Inject(token: any) {
+  return function (
+    target: Object,
+    propertyKey: string,
+    parameterIndex: number
+  ) {
+    return inject(token)(target, propertyKey, parameterIndex);
+  };
+}
+
+export {
+  Get,
+  Post,
+  Put,
+  Delete,
+  Controller,
+  Listeners,
+  Injectable,
+  Inject,
+  RouteInfo,
+};

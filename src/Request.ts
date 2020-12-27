@@ -1,12 +1,13 @@
 import { IncomingMessage } from "http";
 import * as url from "url";
+import { Utils } from "./Utils";
 
 class Request {
   private _incoming: IncomingMessage;
 
   public constructor(incoming: IncomingMessage) {
     this._incoming = incoming;
-    this._sanitizeUrl();
+    this._incoming.url = Utils.sanitizeUrl(this._incoming.url);
   }
 
   public async body<T>() {
@@ -46,11 +47,6 @@ class Request {
         reject(err);
       });
     });
-  }
-
-  private _sanitizeUrl() {
-    this._incoming.url = this._incoming.url?.replace(/\/+/g, "/");
-    this._incoming.url = this._incoming.url?.replace(/\/+$/, "");
   }
 }
 
