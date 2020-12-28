@@ -1,15 +1,15 @@
-import { inject, injectable } from "inversify";
-import Middleware from "./Middleware";
-import { RequestDelegate } from "./RequestHandler";
-import Route from "./Route";
-import Router from "./Router";
+import Middleware from "../Middleware";
+import { RequestDelegate } from "../RequestHandler";
+import Route from "../Route";
+import Router from "../Router";
+import { Injectable } from "./DiDecorators";
 
-interface RouteInfo {
+export interface RouteInfo {
   route: Route;
   handler: RequestDelegate;
 }
 
-function defineRouteMetadata(
+export function defineRouteMetadata(
   path: string,
   method: string,
   middleware: Function[],
@@ -31,7 +31,7 @@ function defineRouteMetadata(
   Reflect.defineMetadata("routes-info", rMetadatas, target);
 }
 
-function Get(path: string, middleware: Function[] = []) {
+export function Get(path: string, middleware: Function[] = []) {
   return function (
     target: any,
     propertyKey: string,
@@ -41,7 +41,7 @@ function Get(path: string, middleware: Function[] = []) {
   };
 }
 
-function Post(path: string, middleware: Function[] = []) {
+export function Post(path: string, middleware: Function[] = []) {
   return function (
     target: any,
     propertyKey: string,
@@ -51,7 +51,7 @@ function Post(path: string, middleware: Function[] = []) {
   };
 }
 
-function Put(path: string, middleware: Function[] = []) {
+export function Put(path: string, middleware: Function[] = []) {
   return function (
     target: any,
     propertyKey: string,
@@ -61,7 +61,7 @@ function Put(path: string, middleware: Function[] = []) {
   };
 }
 
-function Delete(path: string, middleware: Function[] = []) {
+export function Delete(path: string, middleware: Function[] = []) {
   return function (
     target: any,
     propertyKey: string,
@@ -71,48 +71,13 @@ function Delete(path: string, middleware: Function[] = []) {
   };
 }
 
-function Controller(baseUrl: string = "", middleware: Function[] = []) {
+export function Controller(baseUrl: string = "", middleware: Function[] = []) {
   return (constructor: Function) => {
     const router = new Router(baseUrl);
     middleware.forEach((m) =>
       router.use(Reflect.construct(m, []).handle.bind(m))
     );
     Reflect.defineMetadata("router", router, constructor);
-    return injectable()(constructor as any);
+    return Injectable()(constructor as any);
   };
 }
-
-function Listeners(listeners: Function[]) {
-  return (constructor: Function) => {
-    Reflect.defineMetadata("listeners", listeners, constructor);
-    return injectable()(constructor as any);
-  };
-}
-
-function Injectable() {
-  return (constructor: Function) => {
-    return injectable()(constructor as any);
-  };
-}
-
-function Inject(token: any) {
-  return function (
-    target: Object,
-    propertyKey: string,
-    parameterIndex: number
-  ) {
-    return inject(token)(target, propertyKey, parameterIndex);
-  };
-}
-
-export {
-  Get,
-  Post,
-  Put,
-  Delete,
-  Controller,
-  Listeners,
-  Injectable,
-  Inject,
-  RouteInfo,
-};

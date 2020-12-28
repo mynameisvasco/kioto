@@ -1,4 +1,4 @@
-import { Injectable } from "./Decorators";
+import { Injectable } from "./decorators/DiDecorators";
 import { Di } from "./Di";
 import Event from "./Event";
 

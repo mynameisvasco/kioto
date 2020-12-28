@@ -1,5 +1,8 @@
+import { validate } from "class-validator";
 import { IncomingMessage } from "http";
+import { interfaces } from "inversify";
 import * as url from "url";
+import HttpException from "./HttpException";
 import { Utils } from "./Utils";
 
 class Request {
@@ -10,11 +13,24 @@ class Request {
     this._incoming.url = Utils.sanitizeUrl(this._incoming.url);
   }
 
-  public async body<T>() {
+  public async body<T>(obj: interfaces.Newable<T>) {
     if (this._incoming.method?.toLowerCase() === "get") {
       throw new Error("GET methods do not allow a body.");
     }
-    return (await this._readBody()) as T;
+    let body = new obj();
+    Object.assign(body, await this._readBody());
+    const errors = await validate(body);
+    if (errors.length > 0) {
+      let errorMessages = new Array<string>();
+      for (var error of errors) {
+        errorMessages = [
+          ...errorMessages,
+          ...Object.values(error.constraints!),
+        ];
+      }
+      throw new HttpException({ errors: errorMessages }, 400);
+    }
+    return body;
   }
 
   public queries<T>() {

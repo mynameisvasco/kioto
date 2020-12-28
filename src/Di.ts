@@ -7,5 +7,4 @@ export const Di = new Container({
 
 export const Types = {
   Controller: Symbol.for("Controller"),
-  Service: Symbol.for("Service"),
 };

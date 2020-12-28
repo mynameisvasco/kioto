@@ -1,4 +1,4 @@
-import { Injectable } from "../src/Decorators";
+import { Injectable } from "../src/decorators/DiDecorators";
 
 @Injectable()
 export class MyService {

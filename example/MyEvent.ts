@@ -1,4 +1,4 @@
-import { Listeners } from "../src/Decorators";
+import { Listeners } from "../src/decorators/EventDecoratos";
 import Event from "../src/Event";
 import { MyEventListener } from "./MyEventListener";
 import { MyService } from "./MyService";

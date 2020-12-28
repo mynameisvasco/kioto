@@ -1,4 +1,3 @@
-import Event from "../src/Event";
 import EventListener from "../src/EventListener";
 import { MyEvent } from "./MyEvent";
 

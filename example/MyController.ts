@@ -1,21 +1,28 @@
-import { Controller, Get } from "../src/Decorators";
+import { IsEmail, Min } from "class-validator";
+import { Controller, Post } from "../src/decorators/RoutingDecorators";
 import EventManager from "../src/EventManager";
 import Request from "../src/Request";
 import Response from "../src/Response";
 import { MyEvent } from "./MyEvent";
 import { MyService } from "./MyService";
 
+export class TestDto {
+  @Min(1, { message: "i must be a number greater or equal to 1" })
+  i!: number;
+
+  @IsEmail()
+  email!: string;
+}
+
 @Controller("bb")
 export class MyController {
-  constructor(
-    private _myService: MyService,
-    private _eventManager: EventManager
-  ) {}
+  constructor(private _eventManager: EventManager) {}
 
-  @Get("a")
+  @Post("a")
   async test(req: Request, res: Response) {
-    const test = this._myService.test();
+    const body = await req.body(TestDto);
+    console.log(body);
     this._eventManager.enqueue(MyEvent);
-    res.sendJson({ test });
+    res.sendJson({ message: "worked" });
   }
 }

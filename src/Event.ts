@@ -1,4 +1,4 @@
-import { Injectable } from "./Decorators";
+import { Injectable } from "./decorators/DiDecorators";
 import EventListener from "./EventListener";
 
 @Injectable()

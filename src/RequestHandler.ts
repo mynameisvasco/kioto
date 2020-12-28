@@ -3,7 +3,9 @@ import Request from "./Request";
 import Response from "./Response";
 import Router from "./Router";
 import HttpException from "./HttpException";
-import { Injectable } from "./Decorators";
+import { Injectable } from "./decorators/DiDecorators";
+import { Di, Types } from "./Di";
+import { RouteInfo } from "./decorators/RoutingDecorators";
 
 export type RequestDelegate = (
   req: Request,
@@ -19,8 +21,17 @@ class RequestHandler {
     this._routers = new Array();
   }
 
-  public useRouter(router: Router) {
-    this._routers.push(router);
+  public start() {
+    const controller = Di.getAll<any>(Types.Controller);
+    for (var c of controller) {
+      const router = Reflect.getMetadata("router", c.constructor) as Router;
+      const routesInfo = Reflect.getMetadata("routes-info", c) as RouteInfo[];
+      for (var routeInfo of routesInfo) {
+        routeInfo.route.use(routeInfo.handler.bind(c));
+      }
+      router.useRoutes(routesInfo.map((r) => r.route));
+      this.useRouter(router);
+    }
   }
 
   public async handleRequest(input: IncomingMessage, output: ServerResponse) {
@@ -44,10 +55,14 @@ class RequestHandler {
 
   private _handleError(err: any, res: Response) {
     if (err instanceof HttpException) {
-      res.sendJson({ message: err.message, code: err.code });
+      res.sendJson({ message: err.content, code: err.code });
     } else {
       res.sendJson({ message: "Something went wrong.", code: 502 });
     }
+  }
+
+  private useRouter(router: Router) {
+    this._routers.push(router);
   }
 }
 

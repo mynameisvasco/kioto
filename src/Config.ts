@@ -1,6 +1,6 @@
 import * as Fs from "fs";
 import * as Path from "path";
-import { Injectable } from "./Decorators";
+import { Injectable } from "./decorators/DiDecorators";
 
 @Injectable()
 class Config {

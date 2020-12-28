@@ -4,21 +4,13 @@ import Config from "./Config";
 import { Di, Types } from "./Di";
 import Event from "./Event";
 import EventManager from "./EventManager";
+import Middleware from "./Middleware";
+import { Provider } from "./Provider";
 import RequestHandler from "./RequestHandler";
 
 class AppFactory {
-  public static useControllers(controllers: interfaces.Newable<any>[]) {
-    controllers.forEach((c) => Di.bind<any>(Types.Controller).to(c));
-    return this;
-  }
-
   public static useProviders(providers: interfaces.Newable<any>[]) {
-    providers.forEach((p) => Di.bind<any>(p).toSelf());
-    return this;
-  }
-
-  public static useEvents(events: interfaces.Newable<any>[]) {
-    events.forEach((e) => Di.bind(Event).to(e).inTransientScope());
+    providers.forEach((p) => Di.bind(Provider).to(p));
     return this;
   }
 

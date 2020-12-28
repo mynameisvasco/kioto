@@ -1,6 +1,8 @@
+import { Injectable } from "./decorators/DiDecorators";
 import Request from "./Request";
 import Response from "./Response";
 
+@Injectable()
 abstract class Middleware {
   public abstract handle(
     req: Request,
