@@ -13,12 +13,19 @@ export class TestDto {
   email!: string;
 }
 
+class TestQueries {
+  @Min(0)
+  id!: number;
+}
+
 @Controller("test")
 export class MyController {
   constructor(private _eventManager: EventManager) {}
 
   @Get("ab")
   async test(req: Request, res: Response) {
+    const queries = await req.queries(TestQueries);
+    console.log(queries);
     this._eventManager.enqueue(MyEvent);
     res.send({ message: "worked" });
   }
