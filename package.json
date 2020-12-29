@@ -1,6 +1,6 @@
 {
   "name": "nelso",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Nelso is a node.js http library that uses decorators",
   "files": ["build"],
   "scripts": {

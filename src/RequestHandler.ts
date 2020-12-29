@@ -48,12 +48,13 @@ export class RequestHandler {
     try {
       for (var router of this._routers) {
         const route = router.matchRoute(path, method);
-        if (!route) {
-          throw new HttpException(`${method} ${path} not found!`, 404);
+        if (route) {
+          await router.handle(request, response);
+          await route.handle(request, response);
+          return;
         }
-        await router.handle(request, response);
-        await route.handle(request, response);
       }
+      throw new HttpException(`${method} ${path} not found!`, 404);
     } catch (e) {
       this._handleError(e, response);
     }
