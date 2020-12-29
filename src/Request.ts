@@ -33,17 +33,34 @@ export class Request {
     return body;
   }
 
-  public queries<T>() {
+  public async queries<T>(obj: interfaces.Newable<T>) {
     const path = url.parse(this._incoming.url ?? "/");
-    const objs = {} as any;
+    let objs: any = {};
     path.query
       ?.replace("?", "")
       .split("&")
       .forEach((query) => {
         const [key, value] = query.split("=");
-        objs[key] = value;
+        objs[key] = parseInt(value) !== NaN ? parseInt(value) : value;
       });
-    return objs as T;
+    let query = new obj();
+    Object.assign(query, objs);
+    const errors = await validate(query);
+    if (errors.length > 0) {
+      let errorMessages = new Array<string>();
+      for (var error of errors) {
+        errorMessages = [
+          ...errorMessages,
+          ...Object.values(error.constraints!),
+        ];
+      }
+      throw new HttpException({ errors: errorMessages }, 400);
+    }
+    return query;
+  }
+
+  public get headers() {
+    return this._incoming.headers;
   }
 
   private async _readBody() {
