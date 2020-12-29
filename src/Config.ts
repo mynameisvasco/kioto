@@ -3,7 +3,7 @@ import * as Path from "path";
 import { Injectable } from "./decorators/DiDecorators";
 
 @Injectable()
-class Config {
+export class Config {
   private _config: any;
 
   public constructor() {
@@ -28,5 +28,3 @@ class Config {
     return value as T;
   }
 }
-
-export default Config;

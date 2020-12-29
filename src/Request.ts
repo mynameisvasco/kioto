@@ -2,10 +2,10 @@ import { validate } from "class-validator";
 import { IncomingMessage } from "http";
 import { interfaces } from "inversify";
 import * as url from "url";
-import HttpException from "./HttpException";
+import { HttpException } from "./HttpException";
 import { Utils } from "./Utils";
 
-class Request {
+export class Request {
   private _incoming: IncomingMessage;
 
   public constructor(incoming: IncomingMessage) {
@@ -65,5 +65,3 @@ class Request {
     });
   }
 }
-
-export default Request;

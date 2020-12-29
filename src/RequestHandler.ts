@@ -1,11 +1,12 @@
 import { IncomingMessage, ServerResponse } from "http";
-import Request from "./Request";
-import Response from "./Response";
-import Router from "./Router";
-import HttpException from "./HttpException";
+import { Request } from "./Request";
+import { Response } from "./Response";
+import { Router } from "./Router";
+import { HttpException } from "./HttpException";
 import { Injectable } from "./decorators/DiDecorators";
 import { Di, Types } from "./Di";
 import { RouteInfo } from "./decorators/RoutingDecorators";
+import { Config } from "./Config";
 
 export type RequestDelegate = (
   req: Request,
@@ -14,16 +15,21 @@ export type RequestDelegate = (
 ) => Promise<any> | any;
 
 @Injectable()
-class RequestHandler {
+export class RequestHandler {
   private _routers: Array<Router>;
 
-  public constructor() {
+  public constructor(private config: Config) {
     this._routers = new Array();
   }
 
   public start() {
-    const controller = Di.getAll<any>(Types.Controller);
-    for (var c of controller) {
+    let controllers;
+    try {
+      controllers = Di.getAll<any>(Types.Controller);
+    } catch (e) {
+      return;
+    }
+    for (var c of controllers) {
       const router = Reflect.getMetadata("router", c.constructor) as Router;
       const routesInfo = Reflect.getMetadata("routes-info", c) as RouteInfo[];
       for (var routeInfo of routesInfo) {
@@ -55,9 +61,12 @@ class RequestHandler {
 
   private _handleError(err: any, res: Response) {
     if (err instanceof HttpException) {
-      res.sendJson({ message: err.content, code: err.code });
+      res.send({ message: err.content, code: err.code });
     } else {
-      res.sendJson({ message: "Something went wrong.", code: 502 });
+      res.send({ message: "Something went wrong.", code: 502 });
+    }
+    if (this.config.get<string>("enable-logging-errors")) {
+      console.log(err);
     }
   }
 
@@ -65,5 +74,3 @@ class RequestHandler {
     this._routers.push(router);
   }
 }
-
-export default RequestHandler;

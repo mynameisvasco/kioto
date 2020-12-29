@@ -1,12 +1,12 @@
 import "reflect-metadata";
-import AppFactory from "../src/AppFactory";
+import { AppFactory } from "../src/AppFactory";
 import { Di } from "../src/Di";
 import { Provider } from "../src/Provider";
+import { RequestHandler } from "../src/RequestHandler";
 import { MyProvider } from "./MyProvider";
 
-AppFactory.useProviders([MyProvider]);
-
 function register() {
+  Di.bind(Provider).to(MyProvider);
   const providers = Di.getAll(Provider);
   providers.forEach((p) => p.register());
 }
@@ -16,11 +16,7 @@ function boot() {
   providers.forEach((p) => p.boot());
 }
 
-async function bootstrap() {
-  const app = AppFactory.build();
-  app.start();
-}
-
+const app = AppFactory.build();
 register();
 boot();
-bootstrap();
+app.start();

@@ -1,12 +1,12 @@
 import "reflect-metadata";
 import { createServer, Server } from "http";
-import Config from "./Config";
-import RequestHandler from "./RequestHandler";
-import EventManager from "./EventManager";
+import { Config } from "./Config";
+import { RequestHandler } from "./RequestHandler";
+import { EventManager } from "./EventManager";
 import { Injectable } from "./decorators/DiDecorators";
 
 @Injectable()
-class App {
+export class App {
   private readonly _config: Config;
   private readonly _requestHandler: RequestHandler;
   private readonly _eventManager: EventManager;
@@ -31,9 +31,7 @@ class App {
     this._requestHandler.start();
     this._eventManager.start(eventsInterval);
     this._server.listen(port, () =>
-      console.log(`🔥 Pluto running on port ${port}`)
+      console.log(`🔥 Nelso running on port ${port}`)
     );
   }
 }
-
-export default App;

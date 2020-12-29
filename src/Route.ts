@@ -1,7 +1,7 @@
 import * as Url from "url";
-import Request from "./Request";
+import { Request } from "./Request";
 import { RequestDelegate } from "./RequestHandler";
-import Response from "./Response";
+import { Response } from "./Response";
 import { Utils } from "./Utils";
 
 export class Route {
@@ -10,7 +10,7 @@ export class Route {
   private _queue: Array<RequestDelegate>;
 
   public constructor(path: string, method: string) {
-    this._path = Url.parse(Utils.sanitizeUrl("/" + path));
+    this._path = Url.parse(Utils.sanitizeUrl(path));
     this._method = method.toLowerCase();
     this._queue = new Array();
   }
@@ -43,5 +43,3 @@ export class Route {
     return this._queue;
   }
 }
-
-export default Route;

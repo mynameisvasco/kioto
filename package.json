@@ -1,8 +1,8 @@
 {
   "name": "nelso",
-  "version": "0.0.6",
+  "version": "0.0.14",
   "description": "Nelso is a node.js http library that uses decorators",
-  "main": "build/index.js",
+  "files": ["build"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"

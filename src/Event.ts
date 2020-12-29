@@ -1,8 +1,8 @@
 import { Injectable } from "./decorators/DiDecorators";
-import EventListener from "./EventListener";
+import { EventListener } from "./EventListener";
 
 @Injectable()
-abstract class Event {
+export abstract class Event {
   private _listeners: Array<EventListener>;
 
   protected constructor() {
@@ -19,5 +19,3 @@ abstract class Event {
 
   public abstract getArgs(): any;
 }
-
-export default Event;

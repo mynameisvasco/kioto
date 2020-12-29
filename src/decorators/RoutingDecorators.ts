@@ -1,7 +1,7 @@
-import Middleware from "../Middleware";
+import { Middleware } from "../Middleware";
 import { RequestDelegate } from "../RequestHandler";
-import Route from "../Route";
-import Router from "../Router";
+import { Route } from "../Route";
+import { Router } from "../Router";
 import { Injectable } from "./DiDecorators";
 
 export interface RouteInfo {
@@ -31,7 +31,7 @@ export function defineRouteMetadata(
   Reflect.defineMetadata("routes-info", rMetadatas, target);
 }
 
-export function Get(path: string, middleware: Function[] = []) {
+export function Get(path: string = "", middleware: Function[] = []) {
   return function (
     target: any,
     propertyKey: string,
@@ -41,7 +41,7 @@ export function Get(path: string, middleware: Function[] = []) {
   };
 }
 
-export function Post(path: string, middleware: Function[] = []) {
+export function Post(path: string = "", middleware: Function[] = []) {
   return function (
     target: any,
     propertyKey: string,
@@ -51,7 +51,7 @@ export function Post(path: string, middleware: Function[] = []) {
   };
 }
 
-export function Put(path: string, middleware: Function[] = []) {
+export function Put(path: string = "", middleware: Function[] = []) {
   return function (
     target: any,
     propertyKey: string,
@@ -61,7 +61,7 @@ export function Put(path: string, middleware: Function[] = []) {
   };
 }
 
-export function Delete(path: string, middleware: Function[] = []) {
+export function Delete(path: string = "", middleware: Function[] = []) {
   return function (
     target: any,
     propertyKey: string,

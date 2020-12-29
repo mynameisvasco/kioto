@@ -1,7 +1,5 @@
-import Event from "./Event";
+import { Event } from "./Event";
 
-abstract class EventListener {
+export abstract class EventListener {
   public abstract handle(event: Event): Promise<any> | any;
 }
-
-export default EventListener;

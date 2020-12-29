@@ -1,17 +1,17 @@
 import * as Url from "url";
-import Route from "./Route";
+import { Route } from "./Route";
 import { RequestDelegate } from "./RequestHandler";
-import Request from "./Request";
-import Response from "./Response";
+import { Request } from "./Request";
+import { Response } from "./Response";
 import { Utils } from "./Utils";
 
-class Router {
+export class Router {
   private _basePath: Url.Url;
   private _queue: Array<RequestDelegate>;
   private _routes: Array<Route>;
 
   public constructor(basePath: string) {
-    this._basePath = Url.parse("/" + basePath);
+    this._basePath = Url.parse(Utils.sanitizeUrl(basePath)) ?? "";
     this._queue = new Array();
     this._routes = new Array();
   }
@@ -27,7 +27,9 @@ class Router {
   public matchRoute(path: string, method: string) {
     for (var route of this._routes) {
       const providedPath = Url.parse(Utils.sanitizeUrl(path));
-      const finalPathName = `${this.basePath.pathname}${route.path.pathname}`;
+      const finalPathName = `${
+        this._basePath.pathname ? "/" + this._basePath.pathname : ""
+      }${route.path.pathname ? "/" + route.path.pathname : ""}`;
       if (
         finalPathName === providedPath.pathname &&
         route.method === method.toLowerCase()
@@ -53,5 +55,3 @@ class Router {
     return this._basePath;
   }
 }
-
-export default Router;

@@ -1,4 +1,4 @@
-class HttpException extends Error {
+export class HttpException extends Error {
   private _code: number;
   private _content: any;
 
@@ -17,5 +17,3 @@ class HttpException extends Error {
     return this._content;
   }
 }
-
-export default HttpException;

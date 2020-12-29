@@ -1,9 +1,9 @@
 import { Injectable } from "./decorators/DiDecorators";
 import { Di } from "./Di";
-import Event from "./Event";
+import { Event } from "./Event";
 
 @Injectable()
-class EventManager {
+export class EventManager {
   private _queue: Array<Event>;
 
   public constructor() {
@@ -37,5 +37,3 @@ class EventManager {
     e?.dispatch();
   }
 }
-
-export default EventManager;
