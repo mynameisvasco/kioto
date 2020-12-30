@@ -29,7 +29,6 @@ export class MyController {
   @Get("ab")
   async test(req: Request, res: Response) {
     const queries = await req.queries(TestQueries);
-    console.log(queries);
     this._eventManager.enqueue(MyEvent);
     res.send({ message: "worked" });
   }

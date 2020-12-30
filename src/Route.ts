@@ -64,10 +64,11 @@ export class Route {
    * @param method requested http method
    */
   public doesMatch(path: string, method: string): boolean {
-    return (
-      this._path === path.substr(0, path.indexOf("?")) &&
-      this._method === method.toLowerCase()
-    );
+    const hasQuery = path.indexOf("?") !== -1;
+    if (hasQuery) {
+      path = path.substr(0, path.indexOf("?"));
+    }
+    return this._path === path && this._method === method.toLowerCase();
   }
 
   public get path(): string {

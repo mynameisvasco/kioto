@@ -33,7 +33,6 @@ export class Utils {
     const target = new TargetClass();
     Object.assign(target, source);
     const errors = await validate(target);
-    console.log({ target, source });
     if (errors.length > 0) {
       let errorMessages = new Array<string>();
       for (var error of errors) {
