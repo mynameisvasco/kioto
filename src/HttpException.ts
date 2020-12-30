@@ -1,7 +1,22 @@
+/**
+ * Error that represents a http exception
+ */
 export class HttpException extends Error {
+  /**
+   * Http code.
+   */
   private _code: number;
+
+  /**
+   * Content of the error
+   */
   private _content: any;
 
+  /**
+   * Instanciates a new HttpException
+   * @param content content of the error
+   * @param code http code
+   */
   public constructor(content: any, code: number) {
     super(content);
     this._content = content;

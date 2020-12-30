@@ -4,7 +4,14 @@ import { Di } from "./Di";
 import { EventManager } from "./EventManager";
 import { RequestHandler } from "./RequestHandler";
 
+/**
+ * Responsible to create an app.
+ */
 export class AppFactory {
+  /**
+   * Bind all needed dependencies to an app
+   * work.
+   */
   public static build() {
     Di.bind(Config).toSelf();
     Di.bind(RequestHandler).toSelf();

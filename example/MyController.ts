@@ -4,6 +4,7 @@ import { EventManager } from "../src/EventManager";
 import { Request } from "../src/Request";
 import { Response } from "../src/Response";
 import { MyEvent } from "./MyEvent";
+import { MyMiddleware } from "./MyMiddleware";
 
 export class TestDto {
   @Min(1, { message: "i must be a number greater or equal to 1" })
@@ -16,9 +17,12 @@ export class TestDto {
 class TestQueries {
   @Min(0)
   id!: number;
+
+  @IsEmail()
+  email!: string;
 }
 
-@Controller("test")
+@Controller("test", [MyMiddleware])
 export class MyController {
   constructor(private _eventManager: EventManager) {}
 
