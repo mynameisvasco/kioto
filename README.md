@@ -1,4 +1,4 @@
-<img src="https://github.com/mynameisvasco/kioto/blob/master/logo.png?raw=true" alt="logo" style="zoom:25%;" />
+<img src="https://github.com/mynameisvasco/kioto/blob/master/logo.png?raw=true" width="25%" alt="logo" style="zoom:25%;" />
 
 <h1 align="center">Kioto</h1>
 
