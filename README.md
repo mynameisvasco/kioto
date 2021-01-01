@@ -1,8 +1,9 @@
-<img src="https://github.com/mynameisvasco/kioto/blob/master/logo.png?raw=true" width="25%" alt="logo" style="zoom:25%;" />
-
-<h1 align="center">Kioto</h1>
-
-
+<h1 align="center">
+  <img src="https://github.com/mynameisvasco/kioto/blob/master/logo.png?raw=true" width="25%" alt="logo" align="center" />
+</h1>
+<h1 align="center">
+  Kioto
+</h1>
 
 ### 👋🏻 Introduction
 
