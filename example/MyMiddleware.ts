@@ -11,7 +11,7 @@ export class MyMiddleware extends Middleware {
     super();
   }
 
-  public handle(req: Request, res: Response, next: Function) {
-    console.log(this.myService);
+  public async handle(req: Request, res: Response, next: Function) {
+    await next();
   }
 }

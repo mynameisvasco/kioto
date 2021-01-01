@@ -28,9 +28,9 @@ export class Route {
    * @param method route's http method
    */
   public constructor(path: string, method: string) {
+    this._queue = new Array();
     this._path = Utils.sanitizeUrl(path);
     this._method = method.toLowerCase();
-    this._queue = new Array();
   }
 
   /**
@@ -52,7 +52,7 @@ export class Route {
     const next = async () => {
       if (++idx < this._queue.length) {
         let f = this._queue[idx];
-        f(req, res, next);
+        await f(req, res, next);
       }
     };
     f && (await f(req, res, next));

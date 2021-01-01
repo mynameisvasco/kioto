@@ -17,9 +17,8 @@ export class HttpException extends Error {
    * @param content content of the error
    * @param code http code
    */
-  public constructor(content: any, code: number) {
-    super(content);
-    this._content = content;
+  public constructor(message: string, code: number) {
+    super(message);
     this._code = code;
     Object.setPrototypeOf(this, HttpException.prototype);
   }

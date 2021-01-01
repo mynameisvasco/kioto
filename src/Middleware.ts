@@ -20,5 +20,5 @@ export abstract class Middleware {
     req: Request,
     res: Response,
     next?: Function
-  ): Promise<any> | any;
+  ): Promise<any>;
 }

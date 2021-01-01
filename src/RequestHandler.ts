@@ -47,9 +47,7 @@ export class RequestHandler {
       const { basePath, middlewares, routesMeta } = controllerMeta;
       let middlewaresInst = middlewares.map((m: any) => Di.get(m));
       const router = new Router(basePath);
-      middlewaresInst.forEach((m: Middleware) =>
-        router.use(m.handle.bind(m) as RequestDelegate)
-      );
+      middlewaresInst.forEach((m: Middleware) => router.use(m.handle.bind(m)));
       const routes = new Array<Route>();
       routesMeta.forEach((routeMeta) => {
         const { handler, method, middlewares, path } = routeMeta;
@@ -57,9 +55,7 @@ export class RequestHandler {
         let middlewaresInst = middlewares.map((m: any) =>
           Di.get(m)
         ) as Middleware[];
-        middlewaresInst.forEach((m: Middleware) =>
-          route.use(m.handle.bind(m) as RequestDelegate)
-        );
+        middlewaresInst.forEach((m: Middleware) => route.use(m.handle.bind(m)));
         route.use(handler.bind(controller));
         routes.push(route);
       });
@@ -104,7 +100,7 @@ export class RequestHandler {
    */
   private _handleError(err: any, res: Response) {
     if (err instanceof HttpException) {
-      res.send({ message: err.content, code: err.code });
+      res.send({ message: err.message, code: err.code });
     } else {
       res.send({ message: "Something went wrong.", code: 502 });
     }

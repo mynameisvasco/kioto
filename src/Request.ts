@@ -35,7 +35,7 @@ export class Request {
     try {
       return await Utils.mapValidateOrFail(BodyType, bodyStream);
     } catch (e) {
-      throw new HttpException({ errors: e.message }, 400);
+      throw new HttpException(e.message, 400);
     }
   }
 
@@ -56,7 +56,7 @@ export class Request {
     try {
       return await Utils.mapValidateOrFail(QueryType, queries);
     } catch (e) {
-      throw new HttpException({ errors: e.message }, 400);
+      throw new HttpException(e.message, 400);
     }
   }
 

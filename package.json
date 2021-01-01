@@ -1,7 +1,7 @@
 {
-  "name": "nelso",
-  "version": "0.0.21",
-  "description": "Nelso is a node.js http library that uses decorators",
+  "name": "kioto",
+  "version": "0.0.1",
+  "description": "Kioto is a node.js http library that uses decorators",
   "files": [
     "build/**/*.*"
   ],

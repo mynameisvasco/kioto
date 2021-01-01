@@ -18,14 +18,14 @@ export class Config {
    */
   public constructor() {
     try {
-      const configPath = Path.resolve("nelso.json");
+      const configPath = Path.resolve("kioto.json");
       const configFile = Fs.readFileSync(configPath, {
         encoding: "utf-8",
       });
       this._config = JSON.parse(configFile);
     } catch (e) {
       throw new Error(
-        `The file nelso.json does not exist in the root of the project, 
+        `The file kioto.json does not exist in the root of the project, 
         or it's not a valid json file.`
       );
     }

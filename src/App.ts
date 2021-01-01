@@ -59,6 +59,6 @@ export class App {
     const port = this._config.get("port");
     _requestHandler.start();
     _eventManager.start(eventsInterval);
-    _server.listen(port, () => console.log(`🔥 Nelso running on port ${port}`));
+    _server.listen(port, () => console.log(`🔥 Kioto running on port ${port}`));
   }
 }
