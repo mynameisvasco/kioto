@@ -4,6 +4,8 @@ import { Config } from "./Config";
 import { RequestHandler } from "./RequestHandler";
 import { EventManager } from "./EventManager";
 import { Injectable } from "./decorators/DiDecorators";
+import { Di } from "./Di";
+import { Middleware } from ".";
 
 /**
  * Responsible to hold all needed information
@@ -60,5 +62,10 @@ export class App {
     _requestHandler.start();
     _eventManager.start(eventsInterval);
     _server.listen(port, () => console.log(`🔥 Kioto running on port ${port}`));
+  }
+
+  public useGlobalMiddleware(middlewares: Function[]) {
+    const middlewaresInst = middlewares.map((m) => Di.get(m)) as Middleware[];
+    middlewaresInst.forEach((m) => this._requestHandler.use(m.handle.bind(m)));
   }
 }

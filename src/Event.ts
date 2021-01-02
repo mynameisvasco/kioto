@@ -1,20 +1,16 @@
-import { Injectable } from "./decorators/DiDecorators";
 import { EventListener } from "./EventListener";
 
 /**
  * Defines the methods that all
- * events share.
+ * events share. This class is not injectable
  */
-@Injectable()
 export class Event {
-  private _listeners: Array<EventListener>;
+  private _listeners = new Array<EventListener>();
 
   /**
    * Instanciates a new event.
    */
-  protected constructor() {
-    this._listeners = new Array();
-  }
+  protected constructor() {}
 
   /**
    * Dispatches this event.

@@ -3,6 +3,6 @@ import { MyEvent } from "./MyEvent";
 
 export class MyEventListener extends EventListener {
   public handle(event: MyEvent) {
-    console.log(event.getArgs());
+    console.log(event.message);
   }
 }

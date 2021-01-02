@@ -26,7 +26,16 @@ export type RequestDelegate = (
  */
 @Injectable()
 export class RequestHandler {
+  /**
+   * All application routers
+   */
   private _routers: Array<Router>;
+
+  /**
+   * Request handler execution queue, palce where all
+   *  global middlewares are stored.
+   */
+  private _queue: Array<RequestDelegate>;
 
   /**
    * Instanciates a new RequestHandler
@@ -34,6 +43,7 @@ export class RequestHandler {
    */
   public constructor(private config: Config) {
     this._routers = new Array();
+    this._queue = new Array();
   }
 
   /**
@@ -60,7 +70,7 @@ export class RequestHandler {
         routes.push(route);
       });
       router.useRoutes(routes);
-      this._useRouter(router);
+      this.useRouter(router);
     });
   }
 
@@ -80,6 +90,7 @@ export class RequestHandler {
       for (var router of _routers) {
         const route = router.match(path, method);
         if (route) {
+          await this.handle(request, response);
           await router.handle(request, response);
           await route.handle(request, response);
           return;
@@ -89,6 +100,23 @@ export class RequestHandler {
     } catch (e) {
       this._handleError(e, response);
     }
+  }
+
+  /**
+   * Adds a request delegate to the global
+   * execution queue.
+   * @param v handler to add.
+   */
+  use(v: RequestDelegate) {
+    this._queue.push(v);
+  }
+
+  /**
+   * Adds a new router to routers array.
+   * @param router router instance to add
+   */
+  useRouter(router: Router) {
+    this._routers.push(router);
   }
 
   /**
@@ -110,10 +138,19 @@ export class RequestHandler {
   }
 
   /**
-   * Adds a new router to routers array.
-   * @param router router instance to add
+   * Executes global execution queue.
+   * @param req http request.
+   * @param res http response.
    */
-  private _useRouter(router: Router) {
-    this._routers.push(router);
+  private async handle(req: Request, res: Response) {
+    let idx = 0;
+    let f = this._queue[idx];
+    const next = async () => {
+      if (++idx < this._queue.length) {
+        let f = this._queue[idx];
+        await f(req, res, next);
+      }
+    };
+    f && (await f(req, res, next));
   }
 }

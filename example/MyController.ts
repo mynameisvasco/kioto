@@ -1,8 +1,6 @@
 import { IsEmail, Min } from "class-validator";
-import { Http2ServerRequest } from "http2";
 import { Controller, Get, Post } from "../src/decorators/RoutingDecorators";
 import { EventManager } from "../src/EventManager";
-import { HttpException } from "../src/HttpException";
 import { Request } from "../src/Request";
 import { Response } from "../src/Response";
 import { MyEvent } from "./MyEvent";
@@ -32,10 +30,9 @@ export class MyController {
     private _myservice: MyService
   ) {}
 
-  @Get("ab", [MyMiddleware])
+  @Post("ab", [MyMiddleware])
   async test(req: Request, res: Response) {
-    await this._myservice.test2();
-    this._eventManager.enqueue(MyEvent);
+    this._eventManager.enqueue(new MyEvent("Hi from event."));
     res.send({ message: "worked" });
   }
 }

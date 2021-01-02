@@ -1,5 +1,4 @@
 import { Injectable } from "./decorators/DiDecorators";
-import { Di } from "./Di";
 import { Event } from "./Event";
 
 /**
@@ -33,24 +32,22 @@ export class EventManager {
    * Queues a new event.
    * @param event event to be queued
    */
-  public enqueue(event: Function): void {
-    const eventInstance = Di.get<Event>(event);
-    let listeners = Reflect.getMetadata("event:listeners", event);
+  public enqueue(event: Event): void {
+    let listeners = Reflect.getMetadata("event:listeners", event.constructor);
     listeners = listeners.map((l: Function) => Reflect.construct(l, []));
-    eventInstance.addListeners(listeners);
-    this._queue.push(eventInstance);
+    event.addListeners(listeners);
+    this._queue.push(event);
   }
 
   /**
    * Dispatches a new event immediately.
    * @param event event to be dispatched
    */
-  public dispatch(event: Function): void {
-    const eventInstance = Di.get<Event>(event);
-    let listeners = Reflect.getMetadata("listeners", event);
+  public dispatch(event: Event): void {
+    let listeners = Reflect.getMetadata("event:listeners", event.constructor);
     listeners = listeners.map((l: Function) => Reflect.construct(l, []));
-    eventInstance.addListeners(listeners);
-    eventInstance.dispatch();
+    event.addListeners(listeners);
+    event.dispatch();
   }
 
   /**

@@ -15,6 +15,17 @@ export class Request {
   private _incoming: IncomingMessage;
 
   /**
+   * Parsed http request body, empty if method
+   * does not support body.
+   */
+  public body: any;
+
+  /**
+   * Parsed http queries.
+   */
+  public queries: any;
+
+  /**
    * Instanciates a new Request
    * @param incoming instance of http incoming request
    */
@@ -24,37 +35,27 @@ export class Request {
   }
 
   /**
-   * Returns and validates http request body.
+   * Returns validated http request body.
    * @param BodyType expected body data type.
    */
-  public async body<T>(BodyType: interfaces.Newable<T>): Promise<T> {
+  public async bodyAs<T>(BodyType: interfaces.Newable<T>): Promise<T> {
     if (this._incoming.method?.toLowerCase() === "get") {
       throw new Error("GET methods do not allow a body.");
     }
-    const bodyStream = await this._readBody();
     try {
-      return await Utils.mapValidateOrFail(BodyType, bodyStream);
+      return await Utils.mapValidateOrFail(BodyType, this.body);
     } catch (e) {
       throw new HttpException(e.message, 400);
     }
   }
 
   /**
-   * Returns and validates http request queries.
+   * Returns validated http request queries.
    * @param QueryType expected query data type.
    */
-  public async queries<T>(QueryType: interfaces.Newable<T>): Promise<T> {
-    const path = Url.parse(this._incoming.url ?? "/");
-    let queries: any = {};
-    path.query
-      ?.replace("?", "")
-      .split("&")
-      .forEach((query) => {
-        const [key, value] = query.split("=");
-        queries[key] = value;
-      });
+  public async queriesAs<T>(QueryType: interfaces.Newable<T>): Promise<T> {
     try {
-      return await Utils.mapValidateOrFail(QueryType, queries);
+      return await Utils.mapValidateOrFail(QueryType, this.queries);
     } catch (e) {
       throw new HttpException(e.message, 400);
     }
@@ -71,7 +72,7 @@ export class Request {
    * Reads and http request body from buffer
    * and returns it's contents as a json object.
    */
-  private async _readBody(): Promise<any> {
+  async parseBody(): Promise<any> {
     return new Promise((resolve, reject) => {
       let responseBody = "";
       this._incoming.setEncoding("utf8");
@@ -84,5 +85,18 @@ export class Request {
       });
       this._incoming.on("error", (err) => reject(err));
     });
+  }
+
+  parseQueries() {
+    let queries: any = {};
+    const path = Url.parse(this._incoming.url ?? "/");
+    path.query
+      ?.replace("?", "")
+      .split("&")
+      .forEach((query) => {
+        const [key, value] = query.split("=");
+        queries[key] = value;
+      });
+    return queries;
   }
 }
