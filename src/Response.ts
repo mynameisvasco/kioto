@@ -31,7 +31,9 @@ export class Response {
   ): void {
     const { _outcoming } = this;
     _outcoming.statusCode = code;
-    if (headers) this.setHeaders(code, headers);
+    if (headers) {
+      Object.keys(headers).map((k) => this.setHeader(k, headers[k]));
+    }
     if (!_outcoming.getHeader("Content-Type")) {
       this._outcoming.setHeader("Content-Type", contentType);
     }
@@ -40,12 +42,11 @@ export class Response {
   }
 
   /**
-   * Writes http headers and http code
-   * to http response buffer.
-   * @param code http code
-   * @param headers http headers
+   * Writes http header to the http response buffer.
+   * @param key http header key
+   * @param val http header val
    */
-  private setHeaders(code: number, headers: { [key: string]: string }): void {
-    this._outcoming.writeHead(code, headers);
+  public setHeader(key: string, val: string): void {
+    this._outcoming.setHeader(key, val);
   }
 }
