@@ -1,8 +1,8 @@
 import "reflect-metadata";
+import { RequestHandler } from "../src";
 import { AppFactory } from "../src/AppFactory";
 import { Di } from "../src/Di";
 import { Provider } from "../src/Provider";
-import { IntParserMiddleware } from "../src/middlewares/IntParserMiddleware";
 import { MyProvider } from "./MyProvider";
 
 function register() {

@@ -35,7 +35,7 @@ export class Response {
       Object.keys(headers).map((k) => this.setHeader(k, headers[k]));
     }
     if (!_outcoming.getHeader("Content-Type")) {
-      this._outcoming.setHeader("Content-Type", contentType);
+      this.setHeader("Content-Type", contentType);
     }
     _outcoming.write(JSON.stringify(content));
     _outcoming.end();

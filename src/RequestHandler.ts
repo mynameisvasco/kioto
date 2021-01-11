@@ -128,9 +128,9 @@ export class RequestHandler {
    */
   private _handleError(err: any, res: Response) {
     if (err instanceof HttpException) {
-      res.send({ message: err.message, code: err.code });
+      res.send({ message: err.message, code: err.code }, err.code);
     } else {
-      res.send({ message: "Something went wrong.", code: 502 });
+      res.send({ message: "Something went wrong.", code: 502 }, 502);
     }
     if (this.config.get<string>("enable-logging-errors")) {
       console.log(err);

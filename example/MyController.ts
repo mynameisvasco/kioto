@@ -30,9 +30,12 @@ export class MyController {
     private _myservice: MyService
   ) {}
 
-  @Post("ab", [MyMiddleware])
+  @Get("ab", [MyMiddleware])
   async test(req: Request, res: Response) {
+    const queries = req.queries;
+    console.log(queries);
     this._eventManager.enqueue(new MyEvent("Hi from event."));
+    res.setHeader("Aut", "123");
     res.send({ message: "worked" });
   }
 }
