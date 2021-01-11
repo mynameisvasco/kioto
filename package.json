@@ -1,6 +1,6 @@
 {
   "name": "kioto",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Kioto is a node.js http library that uses decorators",
   "files": [
     "build/**/*.*"

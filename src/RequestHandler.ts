@@ -86,11 +86,14 @@ export class RequestHandler {
     const method = input.method ?? "GET";
     const request = new Request(input);
     const response = new Response(output);
+    if (method === "OPTIONS") {
+      await this._handleHttpOptions(request, response);
+    }
     try {
       for (var router of _routers) {
         const route = router.match(path, method);
         if (route) {
-          await this.handle(request, response);
+          await this._handle(request, response);
           await router.handle(request, response);
           await route.handle(request, response);
           return;
@@ -142,7 +145,7 @@ export class RequestHandler {
    * @param req http request.
    * @param res http response.
    */
-  private async handle(req: Request, res: Response) {
+  private async _handle(req: Request, res: Response) {
     let idx = 0;
     let f = this._queue[idx];
     const next = async () => {
@@ -152,5 +155,19 @@ export class RequestHandler {
       }
     };
     f && (await f(req, res, next));
+  }
+
+  /**
+   * Handles http options method request,
+   * can be used to manager cors and other stuff.
+   * @param req http request
+   * @param res http response
+   */
+  private async _handleHttpOptions(req: Request, res: Response) {
+    const httpOptions = this.config.get<any>("httpOptions") ?? {};
+    Object.keys(httpOptions).forEach((k) => {
+      res.setHeader(k, httpOptions[k]);
+    });
+    res.send({});
   }
 }

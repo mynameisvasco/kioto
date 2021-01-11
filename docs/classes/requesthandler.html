@@ -102,8 +102,9 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="requesthandler.html#_handle" class="tsd-kind-icon">_handle</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="requesthandler.html#_handleerror" class="tsd-kind-icon">_handle<wbr>Error</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="requesthandler.html#handle" class="tsd-kind-icon">handle</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="requesthandler.html#_handlehttpoptions" class="tsd-kind-icon">_handle<wbr>Http<wbr>Options</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="requesthandler.html#handlerequest" class="tsd-kind-icon">handle<wbr>Request</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="requesthandler.html#start" class="tsd-kind-icon">start</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="requesthandler.html#use" class="tsd-kind-icon">use</a></li>
@@ -125,7 +126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L38">src/RequestHandler.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L38">src/RequestHandler.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -155,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">_queue<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#requestdelegate" class="tsd-signature-type" data-tsd-kind="Type alias">RequestDelegate</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L38">src/RequestHandler.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L38">src/RequestHandler.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -171,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">_routers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="router.html" class="tsd-signature-type" data-tsd-kind="Class">Router</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L32">src/RequestHandler.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L32">src/RequestHandler.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,6 +185,43 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="_handle" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _handle</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">_handle<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="request.html" class="tsd-signature-type" data-tsd-kind="Class">Request</a>, res<span class="tsd-signature-symbol">: </span><a href="response.html" class="tsd-signature-type" data-tsd-kind="Class">Response</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L148">src/RequestHandler.ts:148</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Executes global execution queue.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>req: <a href="request.html" class="tsd-signature-type" data-tsd-kind="Class">Request</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>http request.</p>
+									</div>
+								</li>
+								<li>
+									<h5>res: <a href="response.html" class="tsd-signature-type" data-tsd-kind="Class">Response</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>http response.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="_handleerror" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _handle<wbr>Error</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -193,7 +231,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L129">src/RequestHandler.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L132">src/RequestHandler.ts:132</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -223,21 +261,22 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="handle" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> handle</h3>
+					<a name="_handlehttpoptions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _handle<wbr>Http<wbr>Options</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">handle<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="request.html" class="tsd-signature-type" data-tsd-kind="Class">Request</a>, res<span class="tsd-signature-symbol">: </span><a href="response.html" class="tsd-signature-type" data-tsd-kind="Class">Response</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">_handle<wbr>Http<wbr>Options<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="request.html" class="tsd-signature-type" data-tsd-kind="Class">Request</a>, res<span class="tsd-signature-symbol">: </span><a href="response.html" class="tsd-signature-type" data-tsd-kind="Class">Response</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L145">src/RequestHandler.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L166">src/RequestHandler.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Executes global execution queue.</p>
+									<p>Handles http options method request,
+									can be used to manager cors and other stuff.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -245,13 +284,13 @@
 								<li>
 									<h5>req: <a href="request.html" class="tsd-signature-type" data-tsd-kind="Class">Request</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>http request.</p>
+										<p>http request</p>
 									</div>
 								</li>
 								<li>
 									<h5>res: <a href="response.html" class="tsd-signature-type" data-tsd-kind="Class">Response</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>http response.</p>
+										<p>http response</p>
 									</div>
 								</li>
 							</ul>
@@ -269,7 +308,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L83">src/RequestHandler.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L83">src/RequestHandler.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -307,7 +346,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L53">src/RequestHandler.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L53">src/RequestHandler.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -330,7 +369,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L110">src/RequestHandler.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L113">src/RequestHandler.ts:113</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -362,7 +401,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/621c4ad/src/RequestHandler.ts#L118">src/RequestHandler.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/058938f/src/RequestHandler.ts#L121">src/RequestHandler.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -440,10 +479,13 @@
 								<a href="requesthandler.html#_routers" class="tsd-kind-icon">_routers</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="requesthandler.html#_handle" class="tsd-kind-icon">_handle</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="requesthandler.html#_handleerror" class="tsd-kind-icon">_handle<wbr>Error</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="requesthandler.html#handle" class="tsd-kind-icon">handle</a>
+								<a href="requesthandler.html#_handlehttpoptions" class="tsd-kind-icon">_handle<wbr>Http<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="requesthandler.html#handlerequest" class="tsd-kind-icon">handle<wbr>Request</a>
