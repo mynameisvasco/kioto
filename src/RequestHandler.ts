@@ -87,12 +87,14 @@ export class RequestHandler {
     const request = new Request(input);
     const response = new Response(output);
     if (method === "OPTIONS") {
-      await this._handleHttpOptions(request, response);
+      this._handleHttpOptions(request, response);
+      return;
     }
     try {
       for (var router of _routers) {
         const route = router.match(path, method);
         if (route) {
+          request.params = route.matchedParams;
           await this._handle(request, response);
           await router.handle(request, response);
           await route.handle(request, response);
@@ -163,7 +165,7 @@ export class RequestHandler {
    * @param req http request
    * @param res http response
    */
-  private async _handleHttpOptions(req: Request, res: Response) {
+  private _handleHttpOptions(req: Request, res: Response) {
     const httpOptions = this.config.get<any>("httpOptions") ?? {};
     Object.keys(httpOptions).forEach((k) => {
       res.setHeader(k, httpOptions[k]);

@@ -66,7 +66,7 @@ export class Router {
     const { _routes } = this;
     for (var route of _routes) {
       const providedPath = Utils.sanitizeUrl(path);
-      if (route.doesMatch(providedPath, method)) {
+      if (route.match(providedPath, method)) {
         return route;
       }
     }

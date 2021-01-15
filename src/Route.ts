@@ -18,9 +18,19 @@ export class Route {
   private _method: string;
 
   /**
+   * Route's path parameters
+   */
+  private _params: Array<string>;
+
+  /**
    * Route's execution queue.
    */
   private _queue: Array<RequestDelegate>;
+
+  /**
+   * Route's parameters resolved at doesMatch
+   */
+  public matchedParams: any;
 
   /**
    * Instanciates a new route.
@@ -28,9 +38,11 @@ export class Route {
    * @param method route's http method
    */
   public constructor(path: string, method: string) {
+    this.matchedParams = {};
     this._queue = new Array();
-    this._path = Utils.sanitizeUrl(path);
+    this._path = Utils.sanitizeUrl(path.replace(/(:[a-zA-Z]*)/g, ""));
     this._method = method.toLowerCase();
+    this._params = path.match(/(:[a-zA-Z]*)/g) ?? new Array<string>();
   }
 
   /**
@@ -63,11 +75,29 @@ export class Route {
    * @param path requested path
    * @param method requested http method
    */
-  public doesMatch(path: string, method: string): boolean {
+  public match(path: string, method: string): boolean {
     const hasQuery = path.indexOf("?") !== -1;
     if (hasQuery) {
       path = path.substr(0, path.indexOf("?"));
     }
+    const hasParams = this._params.length > 0;
+    if (hasParams) {
+      let paramsCounter = 0;
+      const pathArr = path.split("/");
+      path = "";
+      for (var i = pathArr.length; i >= 0; i--) {
+        if (i > this._params.length) {
+          path += pathArr[pathArr.length - i] + "/";
+        } else {
+          if (paramsCounter < this._params.length) {
+            this.matchedParams[this._params[paramsCounter].replace(":", "")] =
+              pathArr[pathArr.length - i];
+            paramsCounter++;
+          }
+        }
+      }
+    }
+    path = Utils.sanitizeUrl(path);
     return this._path === path && this._method === method.toLowerCase();
   }
 

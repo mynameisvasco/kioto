@@ -26,6 +26,11 @@ export class Request {
   public queries: any;
 
   /**
+   * Parsed http params.
+   */
+  public params: any;
+
+  /**
    * Instanciates a new Request
    * @param incoming instance of http incoming request
    */
@@ -69,7 +74,7 @@ export class Request {
   }
 
   /**
-   * Reads and http request body from buffer
+   * Reads http request body from buffer
    * and returns it's contents as a json object.
    */
   async parseBody(): Promise<any> {
@@ -87,6 +92,10 @@ export class Request {
     });
   }
 
+  /**
+   * Reads http request queries
+   * and returns it's contents as a json object.
+   */
   parseQueries() {
     let queries: any = {};
     const path = Url.parse(this._incoming.url ?? "/");

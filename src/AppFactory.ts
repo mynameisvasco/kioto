@@ -3,9 +3,7 @@ import { Config } from "./Config";
 import { Di } from "./Di";
 import { EventManager } from "./EventManager";
 import { Middleware } from "./Middleware";
-import { BodyParserMiddleware } from "./middlewares/BodyParserMiddleware";
-import { DateParserMiddleware } from "./middlewares/DateParserMiddleware";
-import { IntParserMiddleware } from "./middlewares/IntParserMiddleware";
+import { RequestParserMiddleware } from "./middlewares/RequestParserMiddleware";
 import { RequestHandler } from "./RequestHandler";
 
 /**
@@ -20,16 +18,10 @@ export class AppFactory {
     Di.bind(Config).toSelf();
     Di.bind(RequestHandler).toSelf();
     Di.bind(EventManager).toSelf();
-    Di.bind(Middleware).to(IntParserMiddleware);
-    Di.bind(Middleware).to(BodyParserMiddleware);
-    Di.bind(Middleware).to(DateParserMiddleware);
+    Di.bind(Middleware).to(RequestParserMiddleware);
     Di.bind(App).toSelf();
     const app = Di.resolve(App);
-    app.useGlobalMiddleware([
-      BodyParserMiddleware,
-      IntParserMiddleware,
-      DateParserMiddleware,
-    ]);
+    app.useGlobalMiddleware([RequestParserMiddleware]);
     return app;
   }
 }
