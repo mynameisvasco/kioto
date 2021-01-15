@@ -90,12 +90,14 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="route.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="route.html#_method" class="tsd-kind-icon">_method</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="route.html#_params" class="tsd-kind-icon">_params</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="route.html#_path" class="tsd-kind-icon">_path</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="route.html#_queue" class="tsd-kind-icon">_queue</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="route.html#matchedparams" class="tsd-kind-icon">matched<wbr>Params</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -109,8 +111,8 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="route.html#doesmatch" class="tsd-kind-icon">does<wbr>Match</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="route.html#handle" class="tsd-kind-icon">handle</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="route.html#match" class="tsd-kind-icon">match</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="route.html#use" class="tsd-kind-icon">use</a></li>
 							</ul>
 						</section>
@@ -129,7 +131,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L23">src/Route.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L33">src/Route.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -157,7 +159,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_method" class="tsd-anchor"></a>
@@ -165,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">_method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L18">src/Route.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L18">src/Route.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -175,12 +177,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_params" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _params</h3>
+					<div class="tsd-signature tsd-kind-icon">_params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L23">src/Route.ts:23</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Route&#39;s path parameters</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_path" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _path</h3>
 					<div class="tsd-signature tsd-kind-icon">_path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L13">src/Route.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L13">src/Route.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -195,12 +212,27 @@
 					<div class="tsd-signature tsd-kind-icon">_queue<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#requestdelegate" class="tsd-signature-type" data-tsd-kind="Type alias">RequestDelegate</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L23">src/Route.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L28">src/Route.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Route&#39;s execution queue.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="matchedparams" class="tsd-anchor"></a>
+					<h3>matched<wbr>Params</h3>
+					<div class="tsd-signature tsd-kind-icon">matched<wbr>Params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L33">src/Route.ts:33</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Route&#39;s parameters resolved at doesMatch</p>
 						</div>
 					</div>
 				</section>
@@ -217,7 +249,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L82">src/Route.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L112">src/Route.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -235,7 +267,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L74">src/Route.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L104">src/Route.ts:104</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -243,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L78">src/Route.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L108">src/Route.ts:108</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -266,7 +298,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L86">src/Route.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L116">src/Route.ts:116</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../modules.html#requestdelegate" class="tsd-signature-type" data-tsd-kind="Type alias">RequestDelegate</a><span class="tsd-signature-symbol">[]</span></h4>
@@ -277,43 +309,6 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="doesmatch" class="tsd-anchor"></a>
-					<h3>does<wbr>Match</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">does<wbr>Match<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L66">src/Route.ts:66</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Checks if requested path and method match route&#39;s details.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>path: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>requested path</p>
-									</div>
-								</li>
-								<li>
-									<h5>method: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>requested http method</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="handle" class="tsd-anchor"></a>
 					<h3>handle</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -323,7 +318,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L49">src/Route.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L61">src/Route.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -351,6 +346,43 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="match" class="tsd-anchor"></a>
+					<h3>match</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">match<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L78">src/Route.ts:78</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if requested path and method match route&#39;s details.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>requested path</p>
+									</div>
+								</li>
+								<li>
+									<h5>method: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>requested http method</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="use" class="tsd-anchor"></a>
 					<h3>use</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -360,7 +392,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/cc54c6e/src/Route.ts#L40">src/Route.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/mynameisvasco/pluto/blob/c988130/src/Route.ts#L52">src/Route.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -441,10 +473,16 @@
 								<a href="route.html#_method" class="tsd-kind-icon">_method</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="route.html#_params" class="tsd-kind-icon">_params</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="route.html#_path" class="tsd-kind-icon">_path</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="route.html#_queue" class="tsd-kind-icon">_queue</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="route.html#matchedparams" class="tsd-kind-icon">matched<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="route.html#method" class="tsd-kind-icon">method</a>
@@ -456,10 +494,10 @@
 								<a href="route.html#queue" class="tsd-kind-icon">queue</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="route.html#doesmatch" class="tsd-kind-icon">does<wbr>Match</a>
+								<a href="route.html#handle" class="tsd-kind-icon">handle</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="route.html#handle" class="tsd-kind-icon">handle</a>
+								<a href="route.html#match" class="tsd-kind-icon">match</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="route.html#use" class="tsd-kind-icon">use</a>
